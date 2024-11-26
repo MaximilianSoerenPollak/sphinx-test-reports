@@ -7,6 +7,7 @@ import os
 from docutils.parsers.rst import Directive
 from sphinx.util import logging
 from sphinx_needs.api.need import _make_hashed_id
+from sphinx_needs.config import NeedsSphinxConfig
 
 from sphinxcontrib.test_reports.exceptions import (
     SphinxError, TestReportFileNotSetException)
