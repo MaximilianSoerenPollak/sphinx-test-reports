@@ -90,10 +90,7 @@ class TestCommonDirective(Directive):
             self.need_type = self.app.tr_types[self.name][0]
             self.test_id = self.options.get(
                 "id",
-                make_hashed_id(
-                    self.app, self.need_type, self.test_name, self.test_content
-                ),
-            )
+                _make_hashed_id(self.need_type, self.test_name, self.test_content, NeedsSphinxConfig(app.config))
         else:
             self.test_id = self.options.get("id")
 
