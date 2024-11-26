@@ -2,7 +2,7 @@
 
 import os
 
-from setuptools import find_packages, setup
+from setuptools import find_namespace_packages, setup
 
 requires = ["sphinx>=4.0", "lxml", "sphinx-needs>=1.0.1"]
 
