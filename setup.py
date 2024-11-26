@@ -4,7 +4,7 @@ import os
 
 from setuptools import find_namespace_packages, setup
 
-requires = ["sphinx>=4.0", "lxml", "sphinx-needs>=1.0.1"]
+requires = ["sphinx>=4.0", "lxml", "sphinx-needs>=1.0.1", "setuptools"]
 
 with open(os.path.join(os.path.dirname(__file__), "README.rst")) as file:
     setup(
