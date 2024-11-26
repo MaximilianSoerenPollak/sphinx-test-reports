@@ -36,7 +36,7 @@ with open(os.path.join(os.path.dirname(__file__), "README.rst")) as file:
             "Topic :: Documentation",
         ],
         platforms="any",
-        packages=find_packages(),
+        packages=find_namespace_packages(indlude=['sphinxcontrib.*']),
         include_package_data=True,
         install_requires=requires,
         namespace_packages=["sphinxcontrib"],
