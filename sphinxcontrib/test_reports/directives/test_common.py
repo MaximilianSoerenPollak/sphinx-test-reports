@@ -10,10 +10,10 @@ from sphinx_needs.api.need import _make_hashed_id
 from sphinx_needs.config import NeedsSphinxConfig
 from sphinx_needs.data import SphinxNeedsData
 
-from exceptions import (
+from ..exceptions import (
     SphinxError, TestReportFileNotSetException)
-from jsonparser import JsonParser
-from junitparser import JUnitParser
+from ..jsonparser import JsonParser
+from ..junitparser import JUnitParser
 
 # fmt: on
 

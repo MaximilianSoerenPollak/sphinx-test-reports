@@ -4,9 +4,9 @@ import os
 from docutils import nodes
 from docutils.parsers.rst import directives
 
-from directives.test_common import \
+from .test_common import \
     TestCommonDirective
-from exceptions import InvalidConfigurationError
+from ..exceptions import InvalidConfigurationError
 
 # fmt: on
 

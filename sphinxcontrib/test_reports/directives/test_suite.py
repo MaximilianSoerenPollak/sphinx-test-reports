@@ -5,9 +5,9 @@ from docutils.parsers.rst import directives
 from sphinx_needs.api import add_need
 from sphinx_needs.utils import add_doc
 
-import directives.test_case
-from directives.test_common import TestCommonDirective
-from exceptions import TestReportInvalidOption
+from .test_case import TestCaseDirective
+from .test_common import TestCommonDirective
+from ..exceptions import TestReportInvalidOption
 
 
 class TestSuite(nodes.General, nodes.Element):
@@ -176,7 +176,7 @@ class TestSuiteDirective(TestCommonDirective):
 
                 arguments = [case["name"]]
                 case_directive = (
-                    directives.test_case.TestCaseDirective(
+                    TestCaseDirective(
                         self.app.config.tr_case[0],
                         arguments,
                         options,
