@@ -9,6 +9,7 @@ from sphinx.util import logging
 from sphinx_needs.api.need import _make_hashed_id
 from sphinx_needs.config import NeedsSphinxConfig
 from sphinx_needs.data import SphinxNeedsData
+from typing import Any, Dict, List, Iterable
 
 from ..exceptions import (
     SphinxError, TestReportFileNotSetException)
@@ -27,8 +28,8 @@ class TestCommonDirective(Directive):
         super().__init__(*args, **kwargs)
         self.env = self.state.document.settings.env
         self.app = self.env.app
-        sphinxconfig = NeedsSphinxConfig(self.app.config)
-        self.options = {**sphinxconfig.extra_options}
+        self.options
+        # self.options = {**sphinxconfig.extra_options}
         if not hasattr(self.app, "testreport_data"):
             self.app.testreport_data = {}
 
@@ -120,3 +121,21 @@ class TestCommonDirective(Directive):
                 raise Exception("collapse attribute must be true or false")
         else:
             self.collapse = getattr(self.app.config, "needs_collapse_details", True)
+
+    def _merge_extra_options(
+        self,
+        needs_kwargs: dict[str, Any],
+        needs_extra_options: Iterable[str],
+    ) -> set[str]:
+        """Add any extra options introduced via options_ext to needs_info"""
+        extra_keys = set(needs_kwargs.keys()).difference(set(self.options.keys()))
+
+        for key in needs_extra_options:
+            if key in extra_keys:
+                self.options[key] = str(needs_kwargs[key])
+            elif key not in self.options:
+                # Finally add all not used extra options with empty value to need_info.
+                # Needed for filters, which need to access these empty/not used options.
+                self.options[key] = ""
+
+        return extra_keys

@@ -19,7 +19,7 @@ xml_ctest_path = os.path.join(os.path.dirname(__file__), "doc_test/utils", "ctes
 
 
 def test_init_parser():
-    from ..junitparser import JUnitParser
+    from sphinxcontrib.test_reports.junitparser import JUnitParser
 
     parser = JUnitParser(xml_path)
 
@@ -27,7 +27,7 @@ def test_init_parser():
 
 
 def test_xml_object():
-    from ..junitparser import JUnitParser
+    from sphinxcontrib.test_reports.junitparser import JUnitParser
 
     parser = JUnitParser(xml_path)
     obj = parser.junit_xml_object
@@ -37,7 +37,7 @@ def test_xml_object():
 
 
 def test_parse_easy_xml():
-    from ..junitparser import JUnitParser
+    from sphinxcontrib.test_reports.junitparser import JUnitParser
 
     parser = JUnitParser(xml_path)
     assert hasattr(parser, "parse")
@@ -51,7 +51,7 @@ def test_parse_easy_xml():
 
 
 def test_parse_nosetest_xml():
-    from ..junitparser import JUnitParser
+    from sphinxcontrib.test_reports.junitparser import JUnitParser
 
     parser = JUnitParser(xml_nose_path)
     assert hasattr(parser, "parse")
@@ -70,7 +70,7 @@ def test_parse_nosetest_xml():
 
 
 def test_parse_pytest_xml():
-    from ..junitparser import JUnitParser
+    from sphinxcontrib.test_reports.junitparser import JUnitParser
 
     parser = JUnitParser(xml_pytest_path)
     assert hasattr(parser, "parse")
@@ -91,7 +91,7 @@ def test_parse_pytest_xml():
 
 
 def test_parse_pytest_51_xml():
-    from ..junitparser import JUnitParser
+    from sphinxcontrib.test_reports.junitparser import JUnitParser
 
     parser = JUnitParser(xml_pytest51_path)
     assert hasattr(parser, "parse")
@@ -102,7 +102,7 @@ def test_parse_pytest_51_xml():
 
 
 def test_parse_pytest_61_gets_test_suite_attributes():
-    from ..junitparser import JUnitParser
+    from sphinxcontrib.test_reports.junitparser import JUnitParser
 
     parser = JUnitParser(xml_pytest62_path)
     test_suites = parser.parse()
@@ -120,7 +120,7 @@ def test_parse_pytest_61_gets_test_suite_attributes():
 
 
 def test_parse_ctest_xml():
-    from ..junitparser import JUnitParser
+    from sphinxcontrib.test_reports.junitparser import JUnitParser
 
     parser = JUnitParser(xml_ctest_path)
     test_suites = parser.parse()

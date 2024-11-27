@@ -5,6 +5,9 @@ from docutils.parsers.rst import directives
 from sphinx_needs.api import add_need
 from sphinx_needs.utils import add_doc
 
+
+
+from sphinx_needs.config import NeedsSphinxConfig
 from .test_case import TestCaseDirective
 from .test_common import TestCommonDirective
 from ..exceptions import TestReportInvalidOption
@@ -38,9 +41,11 @@ class TestSuiteDirective(TestCommonDirective):
         super().__init__(*args, **kwargs)
         self.case_ids = []
 
-    def run(self, nested=False, count=-1):
+    def run(self, nested=False, count=-1, **kwargs):
         self.prepare_basic_options()
         self.load_test_file()
+        sphinxconfig = NeedsSphinxConfig(self.app.config)
+        self._merge_extra_options(kwargs, sphinxconfig.extra_options)
 
         if nested:
             # access n-th nested suite here
