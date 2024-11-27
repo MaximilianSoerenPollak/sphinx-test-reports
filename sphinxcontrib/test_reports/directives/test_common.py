@@ -8,11 +8,12 @@ from docutils.parsers.rst import Directive
 from sphinx.util import logging
 from sphinx_needs.api.need import _make_hashed_id
 from sphinx_needs.config import NeedsSphinxConfig
+from sphinx_needs.data import SphinxNeedsData
 
-from sphinxcontrib.test_reports.exceptions import (
+from .exceptions import (
     SphinxError, TestReportFileNotSetException)
-from sphinxcontrib.test_reports.jsonparser import JsonParser
-from sphinxcontrib.test_reports.junitparser import JUnitParser
+from .jsonparser import JsonParser
+from .junitparser import JUnitParser
 
 # fmt: on
 
@@ -26,6 +27,8 @@ class TestCommonDirective(Directive):
         super().__init__(*args, **kwargs)
         self.env = self.state.document.settings.env
         self.app = self.env.app
+        sphinxconfig = NeedsSphinxConfig(self.app.config)
+        self.options = {**sphinxconfig.extra_options}
         if not hasattr(self.app, "testreport_data"):
             self.app.testreport_data = {}
 
