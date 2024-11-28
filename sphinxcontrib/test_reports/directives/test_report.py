@@ -34,8 +34,6 @@ class TestReportDirective(TestCommonDirective):
 
     final_argument_whitespace = True
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
 
     def run(self):
         self.prepare_basic_options()

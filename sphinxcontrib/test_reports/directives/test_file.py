@@ -38,11 +38,11 @@ class TestFileDirective(TestCommonDirective):
 
     final_argument_whitespace = True
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.suite_ids = {}
 
     def run(self):
+        self.init_test_atttributes()
+        self.suite_ids = {}
+
         self.prepare_basic_options()
         results = self.load_test_file()
 
@@ -96,7 +96,7 @@ class TestFileDirective(TestCommonDirective):
         print(need_extra_options)
         print("==================================================")
         main_section += add_need(
-            self.app,
+            self.env.app,
             self.state,
             docname,
             self.lineno,
@@ -134,7 +134,7 @@ class TestFileDirective(TestCommonDirective):
                     "_"
                     + hashlib.sha1(suite["name"].encode("UTF-8"))  # noqa: W503
                     .hexdigest()
-                    .upper()[: self.app.config.tr_suite_id_length]
+                    .upper()[: self.env.app.config.tr_suite_id_length]
                 )
 
                 if suite_id not in self.suite_ids:
@@ -156,7 +156,7 @@ class TestFileDirective(TestCommonDirective):
                 arguments = [suite["name"]]
                 suite_directive = (
                     TestSuiteDirective(
-                        self.app.config.tr_suite[0],
+                        self.env.app.config.tr_suite[0],
                         arguments,
                         options,
                         "",

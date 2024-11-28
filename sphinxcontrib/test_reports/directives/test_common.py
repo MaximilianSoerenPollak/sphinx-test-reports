@@ -24,13 +24,11 @@ class TestCommonDirective(NeedDirective):
     """
     Common directive, which provides some shared functions to "real" directives.
     """
+    def run(self) -> List[Any]:
+        self.init_test_atttributes()
+        return super.run()
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.env = self.state.document.settings.env
-        self.app = self.env.app
-        self.options
-        # self.options = {**sphinxconfig.extra_options}
+    def init_test_atttributes(self) -> None:
         if not hasattr(self.app, "testreport_data"):
             self.app.testreport_data = {}
 
