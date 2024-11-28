@@ -112,6 +112,7 @@ def setup(app):
     app.add_directive("test-results", TestResultsDirective)
     app.add_directive("test-env", EnvReportDirective)
     app.add_directive("test-report", TestReportDirective)
+    app.add_directive("test-file", TestFileDirective)
 
     # events
     app.connect("env-updated", install_styles_static_files)
