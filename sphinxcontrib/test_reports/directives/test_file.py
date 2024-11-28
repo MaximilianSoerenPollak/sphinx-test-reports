@@ -4,7 +4,9 @@ from docutils import nodes
 from docutils.parsers.rst import directives
 from sphinx_needs.api import add_need
 from sphinx_needs.utils import add_doc
+from sphinx_needs.config import NeedsSphinxConfig
 
+from sphinx_needs.data import NeedsInfoType
 from .test_suite import TestSuiteDirective
 from .test_common import TestCommonDirective
 from ..exceptions import TestReportIncompleteConfiguration
@@ -65,6 +67,30 @@ class TestFileDirective(TestCommonDirective):
 
         main_section = []
         docname = self.state.document.settings.env.docname
+        needs_config = NeedsSphinxConfig(self.env.config)
+        need_extra_options = {}
+        specified_opts = (
+            "docname",
+            "lineno",
+            "type",
+            "title",
+            "id",
+            "content",
+            "links",
+            "tags",
+            "status",
+            "collapse",
+            "file",
+            "suites",
+            "cases",
+            "passed",
+            "skipped",
+            "failed",
+            "errors",
+        )
+        for extra_option in needs_config.extra_options:
+                    if extra_option not in specified_opts:
+                        need_extra_options[extra_option] = self.options.get(extra_option, "")
         main_section += add_need(
             self.app,
             self.state,
@@ -84,7 +110,8 @@ class TestFileDirective(TestCommonDirective):
             passed=passed,
             skipped=skipped,
             failed=failed,
-            errors=errors,
+            errors=errors, 
+            **need_extra_options
         )
 
         if (

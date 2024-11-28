@@ -8,6 +8,7 @@ from sphinx_needs.utils import add_doc
 
 
 from sphinx_needs.config import NeedsSphinxConfig
+from sphinx_needs.data import NeedsInfoType
 from .test_case import TestCaseDirective
 from .test_common import TestCommonDirective
 from ..exceptions import TestReportInvalidOption
@@ -45,7 +46,6 @@ class TestSuiteDirective(TestCommonDirective):
         self.prepare_basic_options()
         self.load_test_file()
         sphinxconfig = NeedsSphinxConfig(self.app.config)
-        self._merge_extra_options(kwargs, sphinxconfig.extra_options)
 
         if nested:
             # access n-th nested suite here
@@ -80,6 +80,30 @@ class TestSuiteDirective(TestCommonDirective):
 
         main_section = []
         docname = self.state.document.settings.env.docname
+        need_extra_options = {}
+        needs_config = NeedsSphinxConfig(self.env.config)
+        specified_opts = (
+            "docname",
+            "lineno",
+            "type",
+            "title",
+            "id",
+            "content",
+            "links",
+            "tags",
+            "status",
+            "collapse",
+            "file",
+            "suite",
+            "cases",
+            "passed",
+            "skipped",
+            "failed",
+            "errors",
+        )
+        for extra_option in needs_config.extra_options:
+                    if extra_option not in specified_opts:
+                        need_extra_options[extra_option] = self.options.get(extra_option, "")
         main_section += add_need(
             self.app,
             self.state,
@@ -99,7 +123,8 @@ class TestSuiteDirective(TestCommonDirective):
             passed=passed,
             skipped=skipped,
             failed=failed,
-            errors=errors,
+            errors=errors, 
+            **need_extra_options
         )
 
         # TODO double nested logic

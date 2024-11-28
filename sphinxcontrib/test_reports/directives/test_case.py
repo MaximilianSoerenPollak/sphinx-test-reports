@@ -2,6 +2,7 @@ from docutils import nodes
 from docutils.parsers.rst import directives
 from sphinx_needs.api import add_need
 from sphinx_needs.utils import add_doc
+from sphinx_needs.config import NeedsSphinxConfig
 
 from .test_common import TestCommonDirective
 from ..exceptions import TestReportInvalidOption
@@ -163,6 +164,39 @@ class TestCaseDirective(TestCommonDirective):
 
         main_section = []
         docname = self.state.document.settings.env.docname
+        needs_config = NeedsSphinxConfig(self.env.config)
+        need_extra_options = {}
+        specified_opts = (
+            "docname",
+            "lineno",
+            "type",
+            "title",
+            "id",
+            "content",
+            "links",
+            "tags",
+            "status",
+            "collapse",
+            "file",
+            "suite",
+            "case",
+            "case_name",
+            "case_parameter",
+            "classname",
+            "result",
+            "time",
+            "style",
+            "passed",
+            "skipped",
+            "failed",
+            "errors",
+       )
+        for extra_option in needs_config.extra_options:
+                    if extra_option not in specified_opts:
+                        need_extra_options[extra_option] = self.options.get(extra_option, "")
+
+
+
         main_section += add_need(
             self.app,
             self.state,
@@ -185,6 +219,7 @@ class TestCaseDirective(TestCommonDirective):
             result=result,
             time=time,
             style=style,
+            **need_extra_options
         )
         
         add_doc(self.env, docname)
