@@ -6,6 +6,7 @@ import os
 
 from docutils.parsers.rst import Directive
 from sphinx.util import logging
+from sphinx_needs.needs import NeedDirective
 from sphinx_needs.api.need import _make_hashed_id
 from sphinx_needs.config import NeedsSphinxConfig
 from sphinx_needs.data import SphinxNeedsData, NeedsInfoType
@@ -19,7 +20,7 @@ from ..junitparser import JUnitParser
 # fmt: on
 
 
-class TestCommonDirective(Directive):
+class TestCommonDirective(NeedDirective):
     """
     Common directive, which provides some shared functions to "real" directives.
     """

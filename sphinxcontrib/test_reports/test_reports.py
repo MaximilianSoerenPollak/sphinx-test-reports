@@ -7,6 +7,7 @@ from packaging.version import Version
 from sphinx_needs.api import (add_dynamic_function, add_extra_option,
                               add_need_type)
 
+from sphinx.application import Sphinx
 from .directives.test_case import (TestCase,
                                                              TestCaseDirective)
 from .directives.test_env import (EnvReport,
@@ -112,7 +113,6 @@ def setup(app):
     app.add_directive("test-results", TestResultsDirective)
     app.add_directive("test-env", EnvReportDirective)
     app.add_directive("test-report", TestReportDirective)
-    app.add_directive("test-file", TestFileDirective)
 
     # events
     app.connect("env-updated", install_styles_static_files)
@@ -126,7 +126,7 @@ def setup(app):
     }
 
 
-def tr_preparation(app, *args):
+def tr_preparation(app: Sphinx, *args):
     """
     Prepares needed vars in the app context.
     """

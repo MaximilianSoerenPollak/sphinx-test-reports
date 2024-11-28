@@ -4,6 +4,7 @@ from docutils import nodes
 from docutils.parsers.rst import directives
 from sphinx_needs.api import add_need
 from sphinx_needs.utils import add_doc
+from sphinx_needs.needs import Need
 from sphinx_needs.config import NeedsSphinxConfig
 
 from sphinx_needs.data import NeedsInfoType
@@ -91,6 +92,9 @@ class TestFileDirective(TestCommonDirective):
         for extra_option in needs_config.extra_options:
                     if extra_option not in specified_opts:
                         need_extra_options[extra_option] = self.options.get(extra_option, "")
+        print("================MOREINFOHERE=================================")
+        print(need_extra_options)
+        print("==================================================")
         main_section += add_need(
             self.app,
             self.state,
